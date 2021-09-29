@@ -4,7 +4,7 @@ const app = express(),
   bodyParser = require('body-parser'),
   fs = require('fs'),
   port = 8080
-
+const helmet = require('helmet')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json')
 const cors = require('cors')({ origin: true })
@@ -38,7 +38,17 @@ let tasks = [
 ]
 
 app.use(bodyParser.json())
+app.use(helmet())
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {}))
+app.use('/swagger.json', (req, res) => {
+  fs.readFile('./swagger.json', (err, json) => {
+    if (err) {
+      throw err
+    }
+    res.json(JSON.parse(json))
+  })
+})
 
 app.get('/api/todos', (req, res) => {
   console.log('api/todos called!!!!!')
@@ -76,9 +86,9 @@ app.get('/', (req, res) => {
 })
 
 /* CORS */
-app.all('*', async () => {
+app.all('*', async (req, res, next) => {
   cors(req, res, async () => {
-    console.log(req)
+    // console.log(req)
     return next()
   })
 })
