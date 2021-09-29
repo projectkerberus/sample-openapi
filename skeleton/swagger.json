@@ -13,7 +13,7 @@
     }
   },
   "schemes": ["http"],
-  "host": "localhost:8080",
+  "host": "${{values.apiUrl}}",
   "basePath": "/api",
   "paths": {
     "/todos": {
