@@ -33,4 +33,4 @@ spec:
   lifecycle: experimental
   owner: ${{values.owner | dump}}
   definition:
-    $text: https://${{ values.apiUrl }}/swagger.yaml
+    $text: https://github.com/${{values.destination.owner + "/" + values.destination.repo}}/swagger.yaml
