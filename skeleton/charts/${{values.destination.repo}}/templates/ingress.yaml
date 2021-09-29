@@ -16,5 +16,5 @@ spec:
         paths:
           - path: /*
             backend:
-              serviceName: api-svc
+              serviceName: sample-swagger-api-svc
               servicePort: 8080
