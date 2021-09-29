@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: ${{values.component_id | dump}}
-  description: "ReNoMy App Template"
+  description: "Sample Swagger"
   links:
     - url: https://github.com/${{values.destination.owner + "/" + values.destination.repo}}
       title: ${{values.component_id | dump}}
@@ -18,12 +18,12 @@ spec:
   lifecycle: experimental
   owner: ${{values.owner | dump}}
   providesApis:
-    - todo-api
+    - sample-swagger-api
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: todo-api
+  name: sample-swagger-api
   description: Todo API
   tags:
     - swagger
