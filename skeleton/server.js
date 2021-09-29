@@ -49,6 +49,14 @@ app.use('/swagger.json', (req, res) => {
     res.json(JSON.parse(json))
   })
 })
+app.use('/swagger.yaml', (req, res) => {
+  fs.readFile('./swagger.yaml', (err, yaml) => {
+    if (err) {
+      throw err
+    }
+    res.send(yaml)
+  })
+})
 
 app.get('/api/todos', (req, res) => {
   console.log('api/todos called!!!!!')

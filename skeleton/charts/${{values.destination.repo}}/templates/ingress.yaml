@@ -9,6 +9,7 @@ metadata:
     component: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: 'kong'
+    konghq.com/plugins: <kong-spec-expose-example>
 spec:
   rules:
     - host: {{ .Values.apiUrl }}
