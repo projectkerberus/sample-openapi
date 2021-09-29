@@ -1,0 +1,32 @@
+name: Publish Docker Images
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  api-build:
+    name: Build Api Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          file: ./packages/api/Dockerfile
+          context: ./packages/api/
+          push: true
+          tags: ghcr.io/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}:latest
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}

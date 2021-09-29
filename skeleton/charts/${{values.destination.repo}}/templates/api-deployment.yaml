@@ -1,0 +1,26 @@
+{{- if .Values.api }}
+---
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-swagger-api
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    component: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-swagger-api
+  template:
+    metadata:
+      labels:
+        app: sample-swagger-api
+        component: {{ .Release.Namespace }}
+    spec:
+      containers:
+        - name: sample-swagger-api
+          image: {{ .Values.images.api }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

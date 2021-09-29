@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{values.component_id | dump}}
+  description: "ReNoMy App Template"
+  links:
+    - url: https://github.com/${{values.destination.owner + "/" + values.destination.repo}}
+      title: ${{values.component_id | dump}}
+      icon: "dashboard"
+  annotations:
+    github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
+    backstage.io/techdocs-ref: dir:.
+    argocd/app-name: ${{values.component_id | dump}}
+    backstage.io/kubernetes-label-selector: "component=${{ values.component_id }}"
+    sonarqube.org/project-key: ${{values.destination.owner + "_" + values.destination.repo}}
+spec:
+  type: service
+  lifecycle: experimental
+  owner: ${{values.destination.owner | dump}}

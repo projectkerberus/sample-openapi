@@ -1,0 +1,4 @@
+images:
+  api: ghcr.io/${{values.destination.owner + "/" + values.destination.repo}}:latest
+
+apiUrl: ${{values.apiUrl}}
