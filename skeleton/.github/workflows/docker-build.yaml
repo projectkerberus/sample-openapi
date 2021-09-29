@@ -30,3 +30,55 @@ jobs:
           tags: ghcr.io/${{ github.event.repository.owner.name }}/${{ github.event.repository.name }}:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+  tag-repo:
+    name: Create Tag and Branch
+    runs-on: ubuntu-latest
+    needs: [api-build, app-build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Create Branch
+        uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: "gh-pages"
+      - name: Create Tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.package-version.outputs.current-version }}
+  prepare-repo:
+    name: Prepare the repo
+    runs-on: ubuntu-latest
+    needs: [api-build, app-build, tag-repo]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Bump release version
+        id: bump_version
+        uses: christian-draeger/increment-semantic-version@1.0.2
+        with:
+          current-version: ${{ steps.package-version.outputs.current-version }}
+          version-fragment: "bug"
+      - name: Create local changes
+        run: |
+          sed -i --regexp-extended '0,/version: *(.*)/{s//version: ${{ steps.bump_version.outputs.next-version }}/}' charts/${{github.event.repository.name}}/Chart.yaml
+          sed -i --regexp-extended '0,/appVersion: *(.*)/{s//appVersion: ${{ steps.bump_version.outputs.next-version }}/}' charts/${{github.event.repository.name}}/Chart.yaml
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git commit -m "Change helm version" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
