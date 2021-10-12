@@ -1,12 +1,12 @@
 apiVersion: backstage.io/v1beta2
 kind: Template
 metadata:
-  name: sample-swagger-api
-  title: Sample Swagger Api
-  description: Create a Sample Swagger Api
+  name: sample-openapi
+  title: Sample openApi
+  description: Create a Sample openApi
   tags:
     - demo
-    - swagger
+    - openapi
     - node
 spec:
   owner: mauro.sala@kiratech.it
@@ -35,7 +35,7 @@ spec:
           ui:field: OwnerPicker
           ui:options:
             allowedKinds:
-              - Group
+              - User
 
     - title: Choose Url
       required:
