@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: ${{values.component_id | dump}}
-  description: "Sample Swagger"
+  description: "Sample openApi"
   links:
     - url: https://github.com/${{values.destination.owner + "/" + values.destination.repo}}
       title: ${{values.component_id | dump}}
@@ -18,19 +18,19 @@ spec:
   lifecycle: experimental
   owner: ${{values.owner | dump}}
   providesApis:
-    - sample-swagger-api
+    - sample-openapi
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: sample-swagger-api
+  name: sample-openapi
   description: Todo API
   tags:
-    - swagger
+    - openapi
     - rest
 spec:
   type: openapi
   lifecycle: experimental
   owner: ${{values.owner | dump}}
   definition:
-    $text: https://github.com/${{values.destination.owner + "/" + values.destination.repo}}/swagger.yaml
+    $text: https://github.com/${{values.destination.owner + "/" + values.destination.repo}}/openapi.yaml

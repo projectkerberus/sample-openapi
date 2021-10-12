@@ -4,7 +4,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: sample-swagger-api-ingress
+  name: sample-openapi-ingress
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     component: {{ .Release.Namespace }}
   annotations:
@@ -17,5 +17,5 @@ spec:
         paths:
           - path: /*
             backend:
-              serviceName: sample-swagger-api-svc
+              serviceName: sample-openapi-svc
               servicePort: 8080

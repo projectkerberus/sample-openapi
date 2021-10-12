@@ -1,1 +1,1 @@
-sample-swagger-api
+sample-openapi

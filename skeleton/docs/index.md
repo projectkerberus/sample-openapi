@@ -1,1 +1,1 @@
-# Sample Swagger Api
+# Sample openApi
