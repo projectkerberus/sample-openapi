@@ -1,4 +1,4 @@
-site_name: "Sample openApi"
+site_name: "Sample OpenAPI"
 site_description: ${{values.component_id | dump}}
 
 nav:

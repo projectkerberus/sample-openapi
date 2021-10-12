@@ -2,8 +2,8 @@ apiVersion: backstage.io/v1beta2
 kind: Template
 metadata:
   name: sample-openapi
-  title: Sample openApi
-  description: Create a Sample openApi
+  title: Sample OpenAPI
+  description: Create a Sample OpenAPI
   tags:
     - demo
     - openapi

@@ -1,1 +1,1 @@
-# Sample openApi
+# Sample OpenAPI
